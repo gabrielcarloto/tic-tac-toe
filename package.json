@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "tailwind": "npx tailwindcss -i ./src/public/styles.css -o ./dist/output.css --watch"
+    "tlwnd": "npx tailwindcss -i ./src/public/styles.css -o ./dist/output.css --watch",
+    "dev": "tsnd src/server/index.ts"
   },
   "keywords": [],
   "author": "",
