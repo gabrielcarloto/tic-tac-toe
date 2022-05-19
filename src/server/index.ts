@@ -8,6 +8,7 @@ const server = http.createServer(app);
 const io = new socketio.Server(server);
 
 app.use(express.static(path.resolve(__dirname, '..', 'public')));
+app.use(express.static(path.resolve(__dirname, '../..', 'dist')));
 
 io.on('connection', (socket) => {
   console.log(socket.id);
