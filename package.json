@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "tlwnd": "npx tailwindcss -i ./src/public/styles.css -o ./dist/output.css --watch",
-    "dev": "tsnd src/server/index.ts"
+    "watch": "concurrently \"pnpm tsc -w\" \"pnpm tsnd src/server/index.ts\"",
+    "dev": "concurrently \"pnpm watch\" \"pnpm tlwnd\""
   },
   "keywords": [],
   "author": "",
@@ -18,6 +19,7 @@
     "tailwindcss-border-gradients": "^2.0.3"
   },
   "devDependencies": {
+    "concurrently": "^7.2.0",
     "tailwindcss": "^3.0.24",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.6.4"
