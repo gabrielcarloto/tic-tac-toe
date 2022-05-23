@@ -4,6 +4,7 @@ module.exports = {
     extend: {
       fontFamily: {
         mali: ['Mali', 'cursive'],
+        'jakarta-sans': ['Plus Jakarta Sans', 'sans-serif'],
       },
     },
     linearBorderGradients: (theme) => ({
