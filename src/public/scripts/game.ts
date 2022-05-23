@@ -18,6 +18,8 @@ const winningConditions = [
   [2, 4, 6],
 ];
 
+const playerTurn: Element = document.querySelector('[data-player-turn]')!;
+
 const cells: NodeListOf<HTMLButtonElement> =
   document.querySelectorAll('[data-cell]');
 
@@ -48,8 +50,6 @@ function handlePlayCell(
     isGameActive && checkWin(winningCondition);
   });
 
-  if (!isGameActive) return;
-
   checkDraw();
   switchPlayer();
 }
@@ -71,16 +71,25 @@ function checkWin(cells: number[]) {
 }
 
 function checkDraw() {
+  if (!isGameActive) return;
   const isDraw = !cellsState.includes('');
-  if (isDraw) alert('No one wins');
+
+  if (isDraw) {
+    handleEndGame();
+    alert('No one wins');
+  }
 }
 
 function switchPlayer() {
+  if (!isGameActive) return;
+
   if (currentPlayer === 'X') {
     currentPlayer = 'O';
   } else {
     currentPlayer = 'X';
   }
+
+  playerTurn.innerHTML = `Vez de <strong>${currentPlayer}</strong>`;
 }
 
 function handleEndGame() {
@@ -90,4 +99,6 @@ function handleEndGame() {
     cell.setAttribute('disabled', 'true');
     cell.style.cursor = 'not-allowed';
   });
+
+  playerTurn.textContent = 'Fim de jogo';
 }
