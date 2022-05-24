@@ -1,5 +1,6 @@
 let cellsState = ['', '', '', '', '', '', '', '', ''];
 let isGameActive = true;
+let isDraw: boolean;
 let currentPlayer = 'X';
 let scoreboard = {
   X: 0,
@@ -18,7 +19,10 @@ const winningConditions = [
   [2, 4, 6],
 ];
 
-const playerTurn: Element = document.querySelector('[data-player-turn]')!;
+const playerTurn = document.querySelector('[data-player-turn]')!;
+const playerXScore = document.querySelector('[data-scoreboard__x-score]')!;
+const drawScore = document.querySelector('[data-scoreboard__draw-score]')!;
+const playerOScore = document.querySelector('[data-scoreboard__o-score]')!;
 
 const cells: NodeListOf<HTMLButtonElement> =
   document.querySelectorAll('[data-cell]');
@@ -72,7 +76,7 @@ function checkWin(cells: number[]) {
 
 function checkDraw() {
   if (!isGameActive) return;
-  const isDraw = !cellsState.includes('');
+  isDraw = !cellsState.includes('');
 
   if (isDraw) {
     handleEndGame();
@@ -94,6 +98,7 @@ function switchPlayer() {
 
 function handleEndGame() {
   isGameActive = false;
+  updateScoreboard();
 
   cells.forEach((cell) => {
     cell.setAttribute('disabled', 'true');
@@ -101,4 +106,17 @@ function handleEndGame() {
   });
 
   playerTurn.textContent = 'Fim de jogo';
+  playerXScore.textContent = scoreboard.X.toString();
+  playerOScore.textContent = scoreboard.O.toString();
+  drawScore.textContent = scoreboard.draw.toString();
+}
+
+function updateScoreboard() {
+  if (isDraw) {
+    scoreboard.draw++;
+    return;
+  }
+
+  if (currentPlayer === 'X') scoreboard.X++;
+  if (currentPlayer === 'O') scoreboard.O++;
 }
