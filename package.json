@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"pnpm tsnd src/server/index.ts\" \"pnpm vite\"",
+    "dev": "concurrently \"pnpm tsnd server/index.ts\" \"pnpm vite\"",
     "build": "vite build"
   },
   "keywords": [],

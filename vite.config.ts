@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 
-const root = resolve(__dirname, 'src/public');
+const root = resolve(__dirname, 'web');
 const outDir = resolve(__dirname, 'dist');
 
 export default defineConfig({
@@ -10,7 +10,7 @@ export default defineConfig({
     outDir,
     rollupOptions: {
       input: {
-        main: resolve(root, 'index.html'),
+        index: resolve(root, 'index.html'),
         play: resolve(root, 'play/index.html'),
       },
     },
