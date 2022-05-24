@@ -20,6 +20,11 @@ const winningConditions = [
 ];
 
 const playerTurn = document.querySelector('[data-player-turn]')!;
+const gameOverText = document.querySelector('[data-game-over]')!;
+const restartButton = document.querySelector('[data-game-over__restart]')!;
+
+restartButton.addEventListener('click', handleRestartGame);
+
 const playerXScore = document.querySelector('[data-scoreboard__x-score]')!;
 const drawScore = document.querySelector('[data-scoreboard__draw-score]')!;
 const playerOScore = document.querySelector('[data-scoreboard__o-score]')!;
@@ -68,7 +73,6 @@ function checkWin(cells: number[]) {
   const isWinner = cellsSequence.every((cell) => cell === currentPlayer);
 
   if (isWinner) {
-    alert(`Player ${currentPlayer} wins`);
     handleEndGame();
     return;
   }
@@ -78,10 +82,7 @@ function checkDraw() {
   if (!isGameActive) return;
   isDraw = !cellsState.includes('');
 
-  if (isDraw) {
-    handleEndGame();
-    alert('No one wins');
-  }
+  if (isDraw) handleEndGame();
 }
 
 function switchPlayer() {
@@ -105,7 +106,8 @@ function handleEndGame() {
     cell.style.cursor = 'not-allowed';
   });
 
-  playerTurn.textContent = 'Fim de jogo';
+  playerTurn.classList.add('hidden');
+  gameOverText.classList.remove('hidden');
   playerXScore.textContent = scoreboard.X.toString();
   playerOScore.textContent = scoreboard.O.toString();
   drawScore.textContent = scoreboard.draw.toString();
@@ -119,4 +121,20 @@ function updateScoreboard() {
 
   if (currentPlayer === 'X') scoreboard.X++;
   if (currentPlayer === 'O') scoreboard.O++;
+}
+
+function handleRestartGame() {
+  isGameActive = true;
+  currentPlayer = 'X';
+  cellsState = ['', '', '', '', '', '', '', '', ''];
+
+  playerTurn.classList.remove('hidden');
+  playerTurn.innerHTML = `Vez de <strong>${currentPlayer}</strong>`;
+  gameOverText.classList.add('hidden');
+
+  cells.forEach((cell) => {
+    cell.removeAttribute('disabled');
+    cell.style.cursor = 'pointer';
+    cell.textContent = '';
+  });
 }

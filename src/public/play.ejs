@@ -16,6 +16,7 @@
       rel="stylesheet"
     />
     <link href="output.css" rel="stylesheet" />
+    <script src="https://unpkg.com/phosphor-icons"></script>
 
     <title>Jogar</title>
   </head>
@@ -26,6 +27,18 @@
       <h2 class="text-4xl 2xl:text-5xl font-extralight" data-player-turn>
         Vez de <strong>X</strong>
       </h2>
+      <div class="hidden" data-game-over>
+        <div class="flex justify-center items-center">
+          <h2
+            class="text-4xl 2xl:text-5xl font-extralight ml-16 pr-7 md:ml-24 md:pr-16"
+          >
+            Fim de Jogo
+          </h2>
+          <button class="h-6 2xl:h-7" data-game-over__restart>
+            <i class="ph-arrow-counter-clockwise text-3xl 2xl:text-4xl"></i>
+          </button>
+        </div>
+      </div>
       <section class="grid place-items-center py-16 md:py-8 2xl:py-16">
         <div
           class="grid grid-cols-[repeat(3,_max-content)] grid-rows-3 font-mali text-6xl md:text-8xl 2xl:text-9xl"
