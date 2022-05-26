@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mali:wght@200&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/phosphor-icons"></script>
+    <link rel="stylesheet" href="../styles.css" />
+
+    <title>Jogar - Jogo da Velha</title>
+  </head>
+  <body class="font-jakarta-sans">
+    <main
+      class="w-screen h-screen flex flex-col gap-10 items-center justify-center"
+    >
+      <h2 class="text-4xl 2xl:text-5xl font-extralight" data-player-turn>
+        Vez de <strong>X</strong>
+      </h2>
+      <div class="hidden" data-game-over>
+        <div class="flex justify-center items-center">
+          <h2
+            class="text-4xl 2xl:text-5xl font-extralight ml-16 pr-7 md:ml-24 md:pr-16"
+          >
+            Fim de Jogo
+          </h2>
+          <button class="h-6 2xl:h-7" data-game-over__restart>
+            <i class="ph-arrow-counter-clockwise text-3xl 2xl:text-4xl"></i>
+          </button>
+        </div>
+      </div>
+      <section class="grid place-items-center">
+        <div
+          class="grid grid-cols-[repeat(3,_max-content)] grid-rows-3 font-mali text-6xl md:text-8xl 2xl:text-9xl"
+        >
+          <button
+            class="w-28 h-28 md:w-36 md:h-36 2xl:w-48 2xl:h-48 cursor-pointer"
+            data-index="0"
+            data-cell
+          ></button>
+          <button
+            class="w-28 h-28 md:w-36 md:h-36 2xl:w-48 2xl:h-48 border-x-2 border-gradient-t-black-white cursor-pointer"
+            data-index="1"
+            data-cell
+          ></button>
+          <button
+            class="w-28 h-28 md:w-36 md:h-36 2xl:w-48 2xl:h-48 cursor-pointer"
+            data-index="2"
+            data-cell
+          ></button>
+          <button
+            class="w-28 h-28 md:w-36 md:h-36 2xl:w-48 2xl:h-48 border-y-2 border-gradient-l-black-white cursor-pointer"
+            data-index="3"
+            data-cell
+          ></button>
+          <button
+            class="w-28 h-28 md:w-36 md:h-36 2xl:w-48 2xl:h-48 border-2 border-black cursor-pointer"
+            data-index="4"
+            data-cell
+          ></button>
+          <button
+            class="w-28 h-28 md:w-36 md:h-36 2xl:w-48 2xl:h-48 border-y-2 border-gradient-r-black-white cursor-pointer"
+            data-index="5"
+            data-cell
+          ></button>
+          <button
+            class="w-28 h-28 md:w-36 md:h-36 2xl:w-48 2xl:h-48 cursor-pointer"
+            data-index="6"
+            data-cell
+          ></button>
+          <button
+            class="w-28 h-28 md:w-36 md:h-36 2xl:w-48 2xl:h-48 border-x-2 border-gradient-b-black-white cursor-pointer"
+            data-index="7"
+            data-cell
+          ></button>
+          <button
+            class="w-28 h-28 md:w-36 md:h-36 2xl:w-48 2xl:h-48 cursor-pointer"
+            data-index="8"
+            data-cell
+          ></button>
+        </div>
+      </section>
+      <section
+        class="grid grid-cols-3 grid-rows-2 place-items-center text-xl 2xl:text-3xl font-light gap-2"
+        data-scoreboard
+      >
+        <p data-scoreboard__x>X</p>
+        <p data-scoreboard__draw>—</p>
+        <p data-scoreboard__o>O</p>
+        <p
+          class="font-normal md:text-2xl 2xl:text-4xl"
+          data-scoreboard__x-score
+        >
+          0
+        </p>
+        <p
+          class="font-normal md:text-2xl 2xl:text-4xl"
+          data-scoreboard__draw-score
+        >
+          0
+        </p>
+        <p
+          class="font-normal md:text-2xl 2xl:text-4xl"
+          data-scoreboard__o-score
+        >
+          0
+        </p>
+      </section>
+      <button
+        class="bg-zinc-800 hover:bg-white border-2 border-zinc-800 p-2 text-xl 2xl:text-2xl font-extralight hover:font-light text-white hover:text-zinc-800 transition-colors"
+        type="button"
+        data-play-online-btn
+      >
+        jogar online
+      </button>
+    </main>
+
+    <section class="hidden" data-modal>
+      <div
+        class="absolute top-0 left-0 w-screen h-screen grid place-items-center bg-[rgba(0,0,0,0.3)]"
+      >
+        <div
+          class="bg-white shadow-md w-5/6 xl:w-3/12 h-auto p-2 flex flex-col gap-5 items-center"
+          data-modal__content
+        >
+          <div class="relative w-full flex items-center justify-center">
+            <h3 class="font-light text-2xl">jogar online</h3>
+            <button
+              class="absolute right-3 top-1 text-2xl"
+              aria-label="close"
+              data-close-modal-btn
+            >
+              <i class="ph-x-circle"></i>
+            </button>
+          </div>
+          <form class="w-full h-full flex flex-col gap-2" data-play-online-form>
+            <label class="sr-only" for="name-input">insira seu nome</label>
+            <input
+              class="border-2 h-10 p-2"
+              type="text"
+              id="name-input"
+              placeholder="escolha um nome"
+              required
+            />
+            <label class="sr-only" for="room-input"
+              >insira o código da sala (deixe vazio para criar uma)</label
+            >
+            <input
+              class="border-2 h-10 p-2"
+              type="text"
+              id="room-input"
+              placeholder="sala (se vazio criará uma)"
+            />
+            <button
+              class="bg-zinc-800 transition-colors p-2 text-lg 2xl:text-xl font-extralight text-white"
+              type="submit"
+            >
+              entrar
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+    <script src="../scripts/socketio.ts" type="module"></script>
+    <script src="../scripts/play-online.ts" type="module"></script>
+    <script src="../scripts/game.ts" type="module"></script>
+  </body>
+</html>

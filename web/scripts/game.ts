@@ -1,3 +1,6 @@
+import { socket } from './socketio';
+import { player, players } from './play-online';
+
 let cellsState = ['', '', '', '', '', '', '', '', ''];
 let isGameActive = true;
 let isDraw: boolean;
@@ -23,7 +26,12 @@ const playerTurn = document.querySelector('[data-player-turn]')!;
 const gameOverText = document.querySelector('[data-game-over]')!;
 const restartButton = document.querySelector('[data-game-over__restart]')!;
 
-restartButton.addEventListener('click', handleRestartGame);
+restartButton.addEventListener('click', () => {
+  socket?.emit('restart game');
+  handleRestartGame();
+});
+
+socket.on('restart game', handleRestartGame);
 
 const playerXScore = document.querySelector('[data-scoreboard__x-score]')!;
 const drawScore = document.querySelector('[data-scoreboard__draw-score]')!;
@@ -36,13 +44,29 @@ cells.forEach((cell) => {
   cell.addEventListener('click', handleCellClick);
 });
 
+socket?.on('cell clicked', (clickedCellIndex) => {
+  const clickedCell = document.querySelector(
+    `[data-index='${clickedCellIndex}']`,
+  ) as HTMLButtonElement;
+
+  handlePlayCell(clickedCell, clickedCellIndex);
+});
+
 function handleCellClick(e: Event) {
   const clickedCell = e.target as HTMLButtonElement;
   const clickedCellIndex: number = parseInt(
     clickedCell.getAttribute('data-index') as string,
   );
 
-  handlePlayCell(clickedCell, clickedCellIndex);
+  if (!player) {
+    handlePlayCell(clickedCell, clickedCellIndex);
+    return;
+  }
+
+  if (player?.symbol === currentPlayer) {
+    socket.emit('cell clicked', clickedCellIndex);
+    handlePlayCell(clickedCell, clickedCellIndex);
+  }
 }
 
 function handlePlayCell(
@@ -123,7 +147,7 @@ function updateScoreboard() {
   if (currentPlayer === 'O') scoreboard.O++;
 }
 
-function handleRestartGame() {
+export function handleRestartGame() {
   isGameActive = true;
   currentPlayer = 'X';
   cellsState = ['', '', '', '', '', '', '', '', ''];
