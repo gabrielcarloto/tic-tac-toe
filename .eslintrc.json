@@ -15,7 +15,8 @@
     "airbnb-typescript/base"
   ],
   "rules": {
-    "linebreak-style": 0
+    "linebreak-style": 0,
+    "@typescript-eslint/non-nullable-type-assertion-style": 0
   },
   "env": {
     "node": true,
