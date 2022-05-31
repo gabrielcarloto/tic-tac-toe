@@ -16,8 +16,10 @@ interface ExtendedSocket extends Socket {
   symbol?: string;
 }
 
-io.use((socket: ExtendedSocket, next) => {
-  const username = socket.handshake.auth.username;
+io.use((s: ExtendedSocket, next) => {
+  const socket = s;
+
+  const username = socket.handshake.auth.username as string;
 
   if (!username) {
     return next(new Error('invalid username'));
@@ -25,19 +27,20 @@ io.use((socket: ExtendedSocket, next) => {
 
   socket.username = username;
   socket.symbol = '';
-  next();
+  return next();
 });
 
 io.on('connection', (socket: ExtendedSocket) => {
   const users = [];
 
-  for (let [id, socket] of io.of('/').sockets) {
-    (socket as ExtendedSocket).symbol = users.length === 0 ? 'X' : 'O';
+  // eslint-disable-next-line no-restricted-syntax
+  for (const [id, s] of io.of('/').sockets) {
+    (s as ExtendedSocket).symbol = users.length === 0 ? 'X' : 'O';
 
     users.push({
       userID: id,
-      username: (socket as ExtendedSocket).username,
-      symbol: (socket as ExtendedSocket).symbol,
+      username: (s as ExtendedSocket).username,
+      symbol: (s as ExtendedSocket).symbol,
     });
   }
 
