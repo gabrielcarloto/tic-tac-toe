@@ -16,6 +16,7 @@
   ],
   "rules": {
     "linebreak-style": 0,
+    "object-curly-newline": 0,
     "@typescript-eslint/non-nullable-type-assertion-style": 0
   },
   "env": {
