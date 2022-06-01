@@ -24,22 +24,23 @@ const is = {
   online: false,
 };
 
-function enterRoom(username: string) {
+function enterRoom(username: string, room: string | null) {
   socket.auth = { username };
   socket.connect();
   is.online = true;
+  socket.emit('join room', room);
 }
 
 playOnlineForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const nameInput = document.querySelector('#name-input') as HTMLInputElement;
-  // const roomInput = document.querySelector('#room-input') as HTMLInputElement;
+  const roomInput = document.querySelector('#room-input') as HTMLInputElement;
 
   const name = nameInput.value;
-  // const room = roomInput.value !== '' ? roomInput.value : null;
+  const room = roomInput.value !== '' ? roomInput.value : null;
 
-  enterRoom(name);
+  enterRoom(name, room);
 });
 
 export default is;
