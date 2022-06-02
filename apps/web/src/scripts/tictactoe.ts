@@ -5,6 +5,7 @@ export default class TicTacToe {
   public currentPlayer: Player = 'X';
 
   get score() {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return structuredClone(this.scoreboard);
   }
 
@@ -49,7 +50,7 @@ export default class TicTacToe {
     if (this.isGameActive) this.switchPlayer();
   }
 
-  public onPlayOnline() {
+  public onOnlineChange() {
     Object.keys(this.scoreboard).forEach((score) => {
       this.scoreboard[score as Score] = 0;
     });

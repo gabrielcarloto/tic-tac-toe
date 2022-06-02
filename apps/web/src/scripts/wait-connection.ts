@@ -24,6 +24,9 @@ const scoreboardO = document.querySelector(
 const playOnlineButton = document.querySelector(
   '[data-play-online-btn]',
 ) as HTMLButtonElement;
+const disconnectButton = document.querySelector(
+  '[data-disconnect-btn]',
+) as HTMLButtonElement;
 
 export default function waitConnection(players: IPlayer[], room?: string) {
   if (players.length < 2) {
@@ -43,6 +46,7 @@ export default function waitConnection(players: IPlayer[], room?: string) {
   toggleClass(modal, 'hidden');
   toggleClass(modalFirstStep, 'hidden');
   toggleClass(playOnlineButton, 'hidden');
+  toggleClass(disconnectButton, 'hidden');
 
   players.forEach((player) => {
     if (player.symbol === 'X') {
@@ -53,5 +57,5 @@ export default function waitConnection(players: IPlayer[], room?: string) {
   });
 
   // if the player already clicked in a cell
-  game.onPlayOnline();
+  game.onOnlineChange();
 }
