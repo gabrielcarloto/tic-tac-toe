@@ -1,0 +1,24 @@
+{
+  "name": "web",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "socket.io-client": "^4.5.1",
+    "tailwindcss-border-gradients": "^2.0.3"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.7",
+    "eslint": "^8.16.0",
+    "eslint-config-custom": "workspace:*",
+    "postcss": "^8.4.14",
+    "tailwindcss": "^3.0.24",
+    "tsconfig": "workspace:*",
+    "typescript": "^4.5.4",
+    "vite": "^2.9.9"
+  }
+}
