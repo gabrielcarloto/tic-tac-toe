@@ -1,8 +1,9 @@
 import http from 'http';
 import express from 'express';
-import socketio, { Socket } from 'socket.io';
+import socketio from 'socket.io';
 import humanId from 'human-id';
 import IPlayer from './Interfaces/IPlayer';
+import IExtendedSocket from './Interfaces/IExtendedSocket';
 
 const app = express();
 const server = http.createServer(app);
@@ -13,13 +14,7 @@ const io = new socketio.Server(server, {
   },
 });
 
-interface ExtendedSocket extends Socket {
-  username?: string;
-  symbol?: string;
-  room?: string | null;
-}
-
-io.use((s: ExtendedSocket, next) => {
+io.use((s: IExtendedSocket, next) => {
   const socket = s;
 
   const username = socket.handshake.auth.username as string;
@@ -33,7 +28,7 @@ io.use((s: ExtendedSocket, next) => {
   return next();
 });
 
-io.on('connection', (socket: ExtendedSocket) => {
+io.on('connection', (socket: IExtendedSocket) => {
   socket.on('join room', async (roomID: string | null) => {
     const room = roomID ?? humanId({ separator: '-', capitalize: false });
 
@@ -45,7 +40,7 @@ io.on('connection', (socket: ExtendedSocket) => {
     const users: IPlayer[] = [];
 
     roomUsers.forEach((s) => {
-      const user = s as unknown as ExtendedSocket;
+      const user = s as unknown as IExtendedSocket;
 
       user.symbol = users.length === 0 ? 'X' : 'O';
 
