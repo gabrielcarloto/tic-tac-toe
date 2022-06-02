@@ -9,6 +9,9 @@ const modalFirstStep = document.querySelector(
 const playOnlineForm = document.querySelector(
   '[data-play-online-form]',
 ) as HTMLFormElement;
+const roomInput = document.querySelector(
+  '[data-room-input]',
+) as HTMLInputElement;
 const playOnlineButton = document.querySelector(
   '[data-play-online-btn]',
 ) as HTMLButtonElement;
@@ -30,6 +33,7 @@ const is = {
 };
 
 function toggleModalVisibility() {
+  roomInput.value = '';
   toggleClass(modal, 'hidden');
   if (modalFirstStep.classList.contains('hidden')) {
     toggleClass(modalFirstStep, 'hidden');
@@ -62,7 +66,6 @@ playOnlineForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const nameInput = document.querySelector('#name-input') as HTMLInputElement;
-  const roomInput = document.querySelector('#room-input') as HTMLInputElement;
 
   const name = nameInput.value;
   const room = roomInput.value !== '' ? roomInput.value : null;
