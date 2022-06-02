@@ -3,9 +3,18 @@ import game from './common/game';
 import IPlayer from './Interfaces/IPlayer';
 
 const modal = document.querySelector('[data-modal]') as HTMLDivElement;
-const modalContent = document.querySelector(
-  '[data-modal__content]',
+const modalFirstStep = document.querySelector(
+  '[data-modal__first-step]',
 ) as HTMLDivElement;
+const modalSecondStep = document.querySelector(
+  '[data-modal__second-step]',
+) as HTMLDivElement;
+const modalCopyRoomBtn = document.querySelector(
+  '[data-modal__room-btn]',
+) as HTMLButtonElement;
+const modalRoom = document.querySelector(
+  '[data-modal__room]',
+) as HTMLSpanElement;
 const scoreboardX = document.querySelector(
   '[data-scoreboard__x]',
 ) as HTMLParagraphElement;
@@ -16,14 +25,23 @@ const playOnlineButton = document.querySelector(
   '[data-play-online-btn]',
 ) as HTMLButtonElement;
 
-export default function waitConnection(players: IPlayer[]) {
+export default function waitConnection(players: IPlayer[], room?: string) {
   if (players.length < 2) {
-    // prettier-ignore
-    modalContent.innerHTML = '<h3 class="text-xl xl:text-2xl">aguardando o outro jogador...</h3>';
+    toggleClass(modalFirstStep, 'hidden');
+    toggleClass(modalSecondStep, 'hidden');
+
+    modalRoom.textContent = room as string;
+
+    modalCopyRoomBtn.addEventListener('click', () => {
+      // eslint-disable-next-line no-void
+      void navigator.clipboard.writeText(room as string);
+    });
+
     return;
   }
 
   toggleClass(modal, 'hidden');
+  toggleClass(modalFirstStep, 'hidden');
   toggleClass(playOnlineButton, 'hidden');
 
   players.forEach((player) => {

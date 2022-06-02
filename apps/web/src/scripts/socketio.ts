@@ -13,7 +13,7 @@ const self: IPlayer = {
   self: false,
 };
 
-socket.on('joined', () => {
+socket.on('joined', (room: string) => {
   socket.on('users', (users: IPlayer[]) => {
     users.forEach((usr) => {
       const user = usr;
@@ -36,7 +36,7 @@ socket.on('joined', () => {
 
     sortedUsers.forEach((user) => players.push(user));
 
-    waitConnection(players);
+    waitConnection(players, room);
   });
 });
 
