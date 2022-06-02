@@ -1,8 +1,10 @@
-import { io } from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 import IPlayer from './Interfaces/IPlayer';
 import waitConnection from './wait-connection';
 
-const socket = io('http://localhost:3333', { autoConnect: false });
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+const socket: Socket = io(`${BASE_URL}:3333`, { autoConnect: false });
 const players: IPlayer[] = [];
 const self: IPlayer = {
   userID: '',
