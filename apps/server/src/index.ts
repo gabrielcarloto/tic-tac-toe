@@ -66,6 +66,10 @@ io.on('connection', (socket: IExtendedSocket) => {
     socket.on('restart game', () => {
       socket.broadcast.to(room).emit('restart game');
     });
+
+    socket.on('disconnect', () => {
+      socket.broadcast.to(room).emit('player disconnected');
+    });
   });
 });
 

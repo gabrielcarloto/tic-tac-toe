@@ -6,6 +6,9 @@ const modal = document.querySelector('[data-modal]') as HTMLDivElement;
 const modalFirstStep = document.querySelector(
   '[data-modal__first-step]',
 ) as HTMLDivElement;
+const modalSecondStep = document.querySelector(
+  '[data-modal__second-step]',
+) as HTMLDivElement;
 const playOnlineForm = document.querySelector(
   '[data-play-online-form]',
 ) as HTMLFormElement;
@@ -49,11 +52,15 @@ function handleDisconnect() {
   scoreboardO.textContent = 'O';
   toggleClass(playOnlineButton, 'hidden');
   toggleClass(disconnectButton, 'hidden');
+  if (!modalSecondStep.classList.contains('hidden')) {
+    toggleClass(modalSecondStep, 'hidden');
+  }
 }
 
 playOnlineButton.addEventListener('click', toggleModalVisibility);
 closeModalButton.addEventListener('click', toggleModalVisibility);
 disconnectButton.addEventListener('click', handleDisconnect);
+socket.on('player disconnected', handleDisconnect);
 
 function enterRoom(username: string, room: string | null) {
   socket.auth = { username };
