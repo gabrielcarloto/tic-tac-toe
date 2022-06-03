@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.dimmed {
+  color: rgb(113 113 122);
+}
+
+.blink {
+  animation: blink 1s;
+}
+
+@keyframes blink {
+  25% {
+    color: rgb(0, 0, 0, 0);
+  }
+  50% {
+    color: rgb(0, 0, 0, 1);
+  }
+  75% {
+    color: rgb(0, 0, 0, 0);
+  }
+  100% {
+    color: rgb(0, 0, 0, 1);
+  }
+}

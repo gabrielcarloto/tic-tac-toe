@@ -35,16 +35,36 @@ function onRestartGame() {
     const cell = currentCell;
 
     cell.removeAttribute('disabled');
+    cell.classList.remove('dimmed');
     cell.style.cursor = 'pointer';
     cell.textContent = '';
   });
 }
 
-function onEndGame() {
+function highlightEndGameLine(winnerCellsSequence: number[]) {
+  const dimmedCells = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+
+  winnerCellsSequence.forEach((winnerCell) => {
+    const index = dimmedCells.indexOf(winnerCell);
+    if (index > -1) dimmedCells.splice(index, 1);
+
+    const blinkCell = cells[winnerCell];
+    blinkCell.classList.add('blink');
+  });
+
+  dimmedCells.forEach((cellIndex) => {
+    const dimmedCell = cells[cellIndex];
+    dimmedCell.classList.add('dimmed');
+  });
+}
+
+function onEndGame(winnerCellsSequence: number[]) {
   cells.forEach((currentCell) => {
     const cell = currentCell;
     cell.setAttribute('disabled', 'true');
     cell.style.cursor = 'not-allowed';
+
+    highlightEndGameLine(winnerCellsSequence);
   });
 
   playerTurn.classList.add('hidden');

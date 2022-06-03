@@ -34,7 +34,7 @@ export default class TicTacToe {
 
   private onRestartGame: () => void;
 
-  private onEndGame: () => void;
+  private onEndGame: (winnerCellsSequence: number[]) => void;
 
   constructor({ onSwitchPlayer, onRestartGame, onEndGame }: IGameConstructor) {
     this.onSwitchPlayer = onSwitchPlayer;
@@ -70,6 +70,7 @@ export default class TicTacToe {
 
   private checkResults() {
     const cellsSequence: Cell[] = ['', '', ''];
+    let winnerIndexes: number[];
 
     // eslint-disable-next-line no-restricted-syntax
     for (const winningCondition of this.winningConditions) {
@@ -80,8 +81,9 @@ export default class TicTacToe {
 
       const isWin = cellsSequence.every((cell) => cell === this.currentPlayer);
       if (isWin) {
+        winnerIndexes = winningCondition;
         this.updateScoreboard('win');
-        this.endGame();
+        this.endGame(winnerIndexes);
         return;
       }
     }
@@ -89,7 +91,7 @@ export default class TicTacToe {
     const isDraw = !this.cellsState.includes('');
     if (isDraw) {
       this.updateScoreboard('draw');
-      this.endGame();
+      this.endGame([]);
     }
   }
 
@@ -103,8 +105,8 @@ export default class TicTacToe {
     if (result === 'win') this.scoreboard[this.currentPlayer] += 1;
   }
 
-  private endGame() {
+  private endGame(winnerCellsSequence: number[]) {
     this.isGameActive = false;
-    this.onEndGame();
+    this.onEndGame(winnerCellsSequence);
   }
 }
