@@ -1,4 +1,5 @@
 import { io, Socket } from 'socket.io-client';
+import IException from './Interfaces/IException';
 import IPlayer from './Interfaces/IPlayer';
 import waitConnection from './wait-connection';
 
@@ -48,6 +49,11 @@ socket.on('user connected', (user: IPlayer) => {
 socket.on('connect_error', (err: Error) => {
   // eslint-disable-next-line no-console
   console.log(err);
+});
+
+socket.on('exception', (err: IException) => {
+  // eslint-disable-next-line no-console
+  console.error(`Error: ${err.error}`);
 });
 
 export { socket, players, self };

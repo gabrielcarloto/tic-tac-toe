@@ -1,6 +1,7 @@
 import { socket } from './socketio';
 import toggleClass from './common/toggle-class';
 import game from './common/game';
+import IException from './Interfaces/IException';
 
 const modal = document.querySelector('[data-modal]') as HTMLDivElement;
 const modalFirstStep = document.querySelector(
@@ -9,6 +10,9 @@ const modalFirstStep = document.querySelector(
 const modalSecondStep = document.querySelector(
   '[data-modal__second-step]',
 ) as HTMLDivElement;
+const errFullRoomLabel = document.querySelector(
+  '[data-full-room]',
+) as HTMLSpanElement;
 const playOnlineForm = document.querySelector(
   '[data-play-online-form]',
 ) as HTMLFormElement;
@@ -50,6 +54,7 @@ function handleDisconnect() {
   game.onOnlineChange();
   scoreboardX.textContent = 'X';
   scoreboardO.textContent = 'O';
+  errFullRoomLabel.classList.add('hidden');
   toggleClass(playOnlineButton, 'hidden');
   toggleClass(disconnectButton, 'hidden');
   if (!modalSecondStep.classList.contains('hidden')) {
@@ -68,6 +73,11 @@ function enterRoom(username: string, room: string | null) {
   is.online = true;
   socket.emit('join room', room);
 }
+
+socket.on('exception', (err: IException) => {
+  if (err.error === 'the room is full')
+    errFullRoomLabel.classList.remove('hidden');
+});
 
 playOnlineForm.addEventListener('submit', (e) => {
   e.preventDefault();

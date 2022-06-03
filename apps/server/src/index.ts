@@ -32,6 +32,13 @@ io.on('connection', (socket: IExtendedSocket) => {
   socket.on('join room', async (roomID: string | null) => {
     const room = roomID ?? humanId({ separator: '-', capitalize: false });
 
+    const isFull = (await io.in(room).fetchSockets()).length === 2;
+    if (isFull) {
+      socket.emit('exception', { error: 'the room is full' });
+      socket.disconnect();
+      return;
+    }
+
     await socket.join(room);
     socket.emit('joined', room);
 
