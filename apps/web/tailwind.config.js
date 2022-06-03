@@ -3,7 +3,6 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        mali: ['Mali', 'cursive'],
         'jakarta-sans': ['Plus Jakarta Sans', 'sans-serif'],
       },
     },
