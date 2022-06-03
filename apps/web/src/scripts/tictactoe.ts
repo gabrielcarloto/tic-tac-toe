@@ -1,12 +1,12 @@
 import { Cell, Player, Results, Score } from './Types/tictactoe';
 import IGameConstructor from './Interfaces/IGameConstructor';
+import IScore from './Interfaces/IScore';
 
 export default class TicTacToe {
   public currentPlayer: Player = 'X';
 
   get score() {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return structuredClone(this.scoreboard);
+    return structuredClone(this.scoreboard) as IScore;
   }
 
   private isGameActive = true;
