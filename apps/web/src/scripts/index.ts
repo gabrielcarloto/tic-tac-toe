@@ -8,13 +8,10 @@ const restartButton = document.querySelector(
   '[data-game-over__restart]',
 ) as HTMLButtonElement;
 
-const X = '<i class="ph-x-thin"></i>';
-const O = '<i class="ph-circle-thin"></i>';
-
 function markClickedCell(cell: HTMLButtonElement) {
   const clickedCell = cell;
 
-  clickedCell.innerHTML = game.currentPlayer === 'X' ? X : O;
+  clickedCell.innerHTML = game.currentPlayer;
   clickedCell.setAttribute('disabled', 'true');
   clickedCell.style.cursor = 'not-allowed';
 }

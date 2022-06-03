@@ -4,6 +4,7 @@ module.exports = {
     extend: {
       fontFamily: {
         'jakarta-sans': ['Plus Jakarta Sans', 'sans-serif'],
+        montserrat: ['Montserrat', 'sans-serif'],
       },
     },
     linearBorderGradients: (theme) => ({
